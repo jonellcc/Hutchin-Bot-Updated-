@@ -1,0 +1,14 @@
+{
+  "name": "ayaka",
+  "version": "1.0.0",
+  "description": "Ayaka project with ASCII logo",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "JohnSteve Costaños",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^4.1.2"
+  }
+}
