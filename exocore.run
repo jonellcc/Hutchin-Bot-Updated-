@@ -1,0 +1,10 @@
+@Exocore
+#Run
+
+export() = {
+"import": "npm i";
+  }
+
+function() = [
+run = "npm start";
+]
