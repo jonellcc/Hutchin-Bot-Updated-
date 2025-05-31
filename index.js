@@ -2,12 +2,11 @@
 @JohnSteveCostaños as known @ChoruOfficial
 #* Btw this template is default only *#*/
 //# Doesn't need express
-module.exports = function(router) {
-  router.get('/', (req, res) => {
-    res.send('OwnersV2 lel');
-  });
+module.exports = function(router){
 
-  router.get('/:id', (req, res) => {
-    res.send(`Product ${req.params.id} from OwnersV2`);
-  });
-};
+	router.get('/', function(req, res) {
+		res.json({hello:'world'});
+	});
+
+	return router;
+}
