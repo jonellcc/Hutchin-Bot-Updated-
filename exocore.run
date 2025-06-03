@@ -1,10 +1,7 @@
-@Exocore
-#Run
+export = {
+  "npm i";
+}
 
-export() = {
- "npm i";
-  }
-
-function() = [
-run = "npm start";
-]
+function = {
+  run = "npm start"
+}
