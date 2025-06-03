@@ -11,7 +11,7 @@ const saveDetectedRoutes = require('./pathsRoutes');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.get('/', (req, res) => {
-  res.send('Love Server Root - Updated!');
+  res.send('Exocore Server Root - Updated!');
 });
 
 app.on('error', (error) => {
