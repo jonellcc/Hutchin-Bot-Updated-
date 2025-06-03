@@ -13,10 +13,11 @@
 const express = require('express');
 const app = express();
 const PORT = 3000;
-const { generateAndSaveRoutes } = require("./pathsRoutes");
+const generateAndSaveRoutes = require("./pathsRoutes");
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-generateAndSaveRoutes(app)
+
 app.get('/', (req, res) => {
   res.send('Exocore Server Root - Updated!');
 });
@@ -31,6 +32,11 @@ app.on('error', (error) => {
 
 app.listen(PORT, () => {
   console.log(`[Server] Exocore Server is running on http://localhost:${PORT}`);
+  if (typeof generateAndSaveRoutes === 'function') {
+    generateAndSaveRoutes(app);
+  } else {
+    console.error("error")
+  }
 }).on('error', (error) => {
   console.error('[Server] Failed to start server:', error);
   if (error.code === 'EADDRINUSE') {
