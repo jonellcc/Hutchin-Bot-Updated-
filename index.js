@@ -34,7 +34,7 @@ app.listen(PORT, () => {
 }).on('error', (error) => {
   console.error('[Server] Failed to start server:', error);
   if (error.code === 'EADDRINUSE') {
-    console.error(`[Love Server] Port ${PORT} is already in use.`);
+    console.error(`[Server] Port ${PORT} is already in use.`);
   }
   process.exit(1);
 });
