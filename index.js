@@ -16,7 +16,7 @@ const PORT = 3000;
 const { generateAndSaveRoutes } = require("./pathsRoutes");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
+generateAndSaveRoutes(app)
 app.get('/', (req, res) => {
   res.send('Exocore Server Root - Updated!');
 });
