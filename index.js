@@ -1,3 +1,15 @@
+/*  
+ * == Default Express Template ==  
+ *  
+ * Created with care by: @ChoruOfficial (John Steve Costaños)  
+ *  
+ * This template offers a solid and straightforward foundation.  
+ * It's designed to be a versatile starting point,  
+ * ready for you to build upon and customize for your projects.  
+ *  
+ * #Btw this template is default only  
+ * NOTE: Port is fixed. Changing the port is NOT allowed.  
+ */
 const express = require('express');
 const path = require('path'); 
 const generateAndSaveRoutes = require('./pathsRoutes.js');
