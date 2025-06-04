@@ -1,46 +1,25 @@
-/*
- * == Default Express Template ==
- *
- * Created with care by: @ChoruOfficial (John Steve Costaños)
- *
- * This template offers a solid and straightforward foundation.
- * It's designed to be a versatile starting point,
- * ready for you to build upon and customize for your projects.
- *
- * #Btw this template is default only
- */
-
 const express = require('express');
+const path = require('path'); 
+const generateAndSaveRoutes = require('./pathsRoutes.js');
+
 const app = express();
-const PORT = 3000;
-const generateAndSaveRoutes = require("./pathsRoutes");
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-app.get('/', (req, res) => {
-  res.send('Exocore Server Root - Updated!');
+app.use(express.json()); 
+app.get('/home', (req, res) => {
+  res.send('Welcome to the Homepage!');
 });
 
-app.on('error', (error) => {
-  console.error('[Server] Server error:', error);
-  if (error.code === 'EADDRINUSE') {
-    console.error(`[Server] Port ${PORT} is already in use. Attempting to use a different port or exiting.`);
-    process.exit(1);
-  }
-});
-
-app.listen(PORT, () => {
-  console.log(`[Server] Exocore Server is running on http://localhost:${PORT}`);
-  if (typeof generateAndSaveRoutes === 'function') {
+  try {
     generateAndSaveRoutes(app);
-  } else {
-    console.error("error")
+  } catch (e) {
+    console.error("Error calling generateAndSaveRoutes:", e);
   }
-}).on('error', (error) => {
-  console.error('[Server] Failed to start server:', error);
-  if (error.code === 'EADDRINUSE') {
-    console.error(`[Server] Port ${PORT} is already in use.`);
+
+
+const PORT = 3000;
+app.listen(PORT, () => {
+  console.log(`Server is listening on port http://localhost:${PORT}`);
+  if (process.env.NODE_ENV !== 'production') {
+    console.log('Route generation script was called (if no errors above). Check for routes.json.');
   }
-  process.exit(1);
 });
