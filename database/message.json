@@ -9331,5 +9331,50 @@
   "mid.$cAABi-uGTdcGeY4_FU2YMkp6oQMVM": {
     "body": "?shell npm i",
     "attachments": []
+  },
+  "mid.$cAABi-uGTdcGeY5AUEGYMkrJEV6t6": {
+    "body": "?shell npm",
+    "attachments": []
+  },
+  "mid.$gAB1quINh6OqeY5BduWYMksSYo9P-": {
+    "body": "?shell echo",
+    "attachments": []
+  },
+  "mid.$cAABi-uGTdcGeY5FHYmYMkv83XHod": {
+    "body": "?module install shell const { exec } = require(\"child_process\");\n\nmodule.exports = {\n  name: \"shell\",\n  usedby: 2,\n  info: \"Execute shell commands\",\n  onPrefix: true,\n  nickName: [\"exec\", \"linux\"],\n  dev: \"Jonell Magallanes\",\n  cooldowns: 3,\n  dmUser: false,\n  usages: \"shell <command>\",\n\n  onLaunch: async function ({ api, event, target }) {\n    const { threadID, messageID } = event;\n    const command = target.join(\" \");\n\n    if (!command) {\n      return api.sendMessage(\"Please provide a shell command to execute.\", threadID, messageID);\n    }\n\n    const msg = await api.sendMessage(\"Processing...\", threadID);\n\n    exec(command, (error, stdout, stderr) => {\n      if (error) {\n        return api.editMessage(`❌ Error:\\n${error.message}`, msg.messageID);\n      }\n      if (stderr) {\n        return api.editMessage(`⚠️ Stderr:\\n${stderr}`, msg.messageID);\n      }\n      api.editMessage(stdout || \"✅ Done with no output.\", msg.messageID);\n    });\n  }\n};",
+    "attachments": []
+  },
+  "mid.$cAABi-uGTdcGeY5FrwWYMkwhKvQKe": {
+    "body": "?module reload shell",
+    "attachments": []
+  },
+  "mid.$cAABi-uGTdcGeY5GF6GYMkw7XcrDy": {
+    "body": "?shell echo i",
+    "attachments": []
+  },
+  "mid.$gAB1quINh6OqeY592bWYMlop73ZPL": {
+    "body": "upgrade ko muna axios",
+    "attachments": []
+  },
+  "mid.$gAB1quINh6OqeY5-GwWYMlo6Z9p65": {
+    "body": "maya",
+    "attachments": []
+  },
+  "mid.$gAB1quINh6OqeY6GEHWYMlw58UJbN": {
+    "body": "?shell echo hello 🌱",
+    "attachments": []
+  },
+  "mid.$gAB1quINh6OqeY6H3lWYMlyrvkv-d": {
+    "body": "📤 𝗦𝗵𝗮𝗿𝗲 𝗠𝗼𝗱𝘂𝗹𝗲\n━━━━━━━━━━━━━━━━━━\n📁 Path: cmds/ai.js\n📄 Lines: 26\n📦 Size: 0.92 KB\n━━━━━━━━━━━━━━━━━━\n\nconst axios = require(\"axios\");\n\nmodule.exports = {\n  name: \"ai\",\n  usedby: 0,\n  onPrefix: true,\n  dev: \"Jonell Magallanes\",\n  cooldowns: 5,\n\n  onLaunch: async function ({ api, event, target }) {\n    const ask = target.join(\" \");\n    if (!ask) {\n      return api.sendMessage(\"Please enter a question after the command.\", event.threadID, event.messageID);\n    }\n\n    try {\n      const thinking = await api.sendMessage(\"Thinking...\", event.threadID);\n      const res = await axios.get(`https://kaiz-apis.gleeze.com/api/gpt-4o?ask=${encodeURIComponent(ask)}&uid=${event.senderID}&webSearch=off&apikey=9092efe8-8724-4e3d-87d9-dd7024df431d`);\n      const reply = res.data.response;\n      await api.editMessage(reply, thinking.messageID);\n    } catch (err) {\n      const thinking = await api.sendMessage(\"Thinking...\", event.threadID);\n      await api.editMessage(\"❌ An error occurred while fetching the response.\", thinking.messageID);\n    }\n  }\n};",
+    "attachments": [
+      {
+        "type": "share",
+        "ID": "ee.mid.$gAB1quINh6OqeY6H3lWYMlyrvkv-d",
+        "title": "Shared Content",
+        "description": "Unsupported shared content.",
+        "source": null,
+        "isUnrecognized": true
+      }
+    ]
   }
 }

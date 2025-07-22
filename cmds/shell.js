@@ -19,7 +19,7 @@ module.exports = {
       return api.sendMessage("Please provide a shell command to execute.", threadID, messageID);
     }
 
-    const msg = await api.sendMessage("Processing...", threadID, messageID);
+    const msg = await api.sendMessage("Processing...", threadID);
 
     exec(command, (error, stdout, stderr) => {
       if (error) {
