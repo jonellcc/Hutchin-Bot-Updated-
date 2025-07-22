@@ -9408,5 +9408,78 @@
   "mid.$gAB1quINh6OqeY8--1GYMopx_Foqz": {
     "body": "hahahaha",
     "attachments": []
+  },
+  "mid.$cAABi-uGTdcGeY-2lImYMqhaa4JQd": {
+    "body": "-brat importanti wala klasi",
+    "attachments": []
+  },
+  "mid.$cAABi-uGTdcGeY-3aO2YMqiPuwcYd": {
+    "body": "?brat importanti wala klasi",
+    "attachments": []
+  },
+  "mid.$cAABi-uGTdcGeY-7gcWYMqmV5PAsk": {
+    "body": "?brat importanti wala klasi",
+    "attachments": []
+  },
+  "mid.$gAB1quINh6OqeY-9JxGYMqn_sD5Lt": {
+    "body": "?brat importanti wala klasi",
+    "attachments": []
+  },
+  "mid.$gAB1quINh6OqeY--NLWYMqpDOFMUa": {
+    "body": "?",
+    "attachments": []
+  },
+  "mid.$gAB1quINh6OqeY-_MXWYMqqCFrxVb": {
+    "body": "di siya maka send ng image",
+    "attachments": []
+  },
+  "mid.$gAB1quINh6OqeY_DvumYMquliNf9-": {
+    "body": "?music indihome remix",
+    "attachments": []
+  },
+  "mid.$gAB1quINh6OqeY_EkfWYMqvaQgGx1": {
+    "body": "?music indihome remix",
+    "attachments": []
+  },
+  "mid.$gAB1quINh6OqeY_FHRGYMqv9MQzJE": {
+    "body": "Umay",
+    "attachments": []
+  },
+  "mid.$gAB1quINh6OqeY_FT-2YMqwJwkjt7": {
+    "body": "Di maka send",
+    "attachments": []
+  },
+  "mid.$cAABi-uGTdcGeY_LrE2YMq2gfN1OZ": {
+    "body": "?module share music",
+    "attachments": []
+  },
+  "mid.$cAABi-uGTdcGeY_Tk92YMq-VaEOwm": {
+    "body": "?module install music const axios = require(\"axios\");\nconst yts = require(\"yt-search\");\n\nmodule.exports = {\n  name: \"music\",\n  info: \"Music\",\n  permission: 0,\n  cooldowns: 10,\n  onPrefix: true,\n\n  async onLaunch({ api, event }) {\n    const query = event.body?.split(\" \").slice(1).join(\" \");\n    if (!query) return api.sendMessage(\"❌ Usage: music <song name>\", event.threadID, event.messageID);\n\n    const reactTarget = event.messageID;\n    await api.setMessageReaction(\"⏱️\", reactTarget, event.senderID, true);\n\n    try {\n      const result = await yts(query);\n      if (!result.videos.length) {\n        await api.setMessageReaction(\"❌\", reactTarget, event.senderID, true);\n        return api.sendMessage(\"❌ No results found.\", event.threadID, event.messageID);\n      }\n\n      const video = result.videos[0];\n      const videoUrl = video.url;\n\n      const res = await axios.get(`http://ccproject.serv00.net/ytdl2.php?url=${videoUrl}`);\n      const { title, download } = res.data;\n\n      const fileStream = await axios.get(download, { responseType: \"stream\" });\n\n      await api.setMessageReaction(\"✅\", reactTarget, event.senderID, true);\n\n      const message =\n        `🎵 𝗠𝘂𝘀𝗶𝗰 𝗥𝗲𝘀𝘂𝗹𝘁\\n━━━━━━━━━━━━━━━━━━\\n` +\n        `🎶 Title: ${video.title}\\n` +\n        `🕒 Duration: ${video.timestamp}\\n` +\n        `🎤 Artist: ${video.author.name}\\n` +\n        `📺 YouTube Link: ${video.url}\\n` +\n        `⬇️ Download: ${download}`;\n\n      api.sendMessage({ body: message, attachment: fileStream.data }, event.threadID, event.messageID);\n    } catch (err) {\n      await api.setMessageReaction(\"❌\", reactTarget, event.senderID, true);\n      api.sendMessage(\"❌ Unexpected error occurred.\", event.threadID, event.messageID);\n    }\n  }\n};",
+    "attachments": [
+      {
+        "type": "share",
+        "ID": "ee.mid.$cAABi-uGTdcGeY_Tk92YMq-VaEOwm",
+        "title": "Shared Content",
+        "description": "Unsupported shared content.",
+        "source": null,
+        "isUnrecognized": true
+      }
+    ]
+  },
+  "mid.$cAABi-uGTdcGeY_T_OWYMq-0s6N89": {
+    "body": "?module reload music",
+    "attachments": []
+  },
+  "mid.$cAABi-uGTdcGeY_UQ4mYMq_GmcNJB": {
+    "body": "?music soda pop",
+    "attachments": []
+  },
+  "mid.$cAABi-uGTdcGeY_Wc92YMrBSnD5Xa": {
+    "body": "?music soda pop music",
+    "attachments": []
+  },
+  "mid.$gAB1quINh6OqeY_W1fWYMrBrikVKH": {
+    "body": "Direct na pala",
+    "attachments": []
   }
 }
