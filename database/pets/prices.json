@@ -1,0 +1,17 @@
+{
+  "apple": { "min": 20, "max": 70 },
+  "meat": { "min": 50, "max": 150 },
+  "fish": { "min": 40, "max": 115 },
+  "bread": { "min": 30, "max": 80 },
+  "bone": { "min": 35, "max": 90 },
+  "water": { "min": 10, "max": 30 },
+  "milk": { "min": 25, "max": 60 },
+  "carrot": { "min": 15, "max": 50 },
+  "banana": { "min": 20, "max": 60 },
+  "cheese": { "min": 40, "max": 100 },
+  "steak": { "min": 80, "max": 200 },
+  "cookie": { "min": 25, "max": 70 },
+  "egg": { "min": 20, "max": 50 },
+  "juice": { "min": 15, "max": 40 },
+  "snack": { "min": 30, "max": 75 }
+}

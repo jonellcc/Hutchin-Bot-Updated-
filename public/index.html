@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bot Control Panel CC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.10.2/dist/cdn.min.js"></script>
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in { animation: fadeIn 0.5s ease-out; }
+
+        @keyframes fadeOut {
+            from { opacity: 1; transform: scale(1); }
+            to { opacity: 0; transform: scale(0); }
+        }
+        .fade-out { animation: fadeOut 0.5s ease-out forwards; }
+
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
+        .loading-circle {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        .popup {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transition: opacity 0.5s ease-out;
+        }
+        .popup.show { opacity: 1; }
+
+        #ping {
+            position: fixed;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 500;
+            font-style: italic;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white flex flex-col items-center justify-center min-h-screen p-6">
+
+    <div class="w-full max-w-3xl space-y-6 fade-in">
+        <h1 class="text-3xl font-bold text-center">Bot Control Panel</h1>
+
+        <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+            <label class="block text-lg font-medium mb-2">Paste JSON:</label>
+            <textarea id="jsonInput" class="w-full p-3 rounded-lg bg-gray-700 text-white border border-gray-600 focus:ring focus:ring-blue-500 transition" rows="6" placeholder="Paste JSON here..."></textarea>
+            <button onclick="askPasscode('updateAppState')" class="mt-4 w-full bg-blue-600 hover:bg-blue-700 transition px-4 py-2 rounded-lg font-semibold shadow-lg">Proceed</button>
+        </div>
+
+        <div class="bg-gray-800 p-6 rounded-lg shadow-lg fade-in">
+            <button onclick="askPasscode('restartBot')" class="w-full bg-red-600 hover:bg-red-700 transition px-4 py-2 rounded-lg font-semibold shadow-lg">Restart Bot</button>
+        </div>
+
+        <div class="bg-gray-800 p-6 rounded-lg shadow-lg fade-in">
+            <label class="block text-lg font-medium mb-2">Execute Command:</label>
+            <input type="text" id="commandInput" class="w-full p-3 rounded-lg bg-gray-700 text-white border border-gray-600 focus:ring focus:ring-blue-500 transition" placeholder="Enter a command...">
+            <button onclick="askPasscode('executeCommand')" class="mt-4 w-full bg-yellow-600 hover:bg-yellow-700 transition px-4 py-2 rounded-lg font-semibold shadow-lg">Execute</button>
+        </div>
+
+    </div>
+
+    <div id="ping" class="fade-in">Ping: <span id="pingValue">Loading...</span></div>
+
+    <div id="loading" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden">
+        <div class="loading-circle"></div>
+    </div>
+
+    <div id="popupNotification" class="popup"></div>
+
+    <script>
+        function showPopup(message) {
+            const popup = document.getElementById("popupNotification");
+            popup.textContent = message;
+            popup.classList.add("show");
+            setTimeout(() => popup.classList.remove("show"), 3000);
+        }
+
+        function askPasscode(action) {
+            const passcode = prompt("Enter Passcode:");
+            if (!passcode) {
+                showPopup("Passcode is required.");
+                return;
+            }
+            window[action](passcode);
+        }
+
+        function updateAppState(passcode) {
+            const jsonInput = document.getElementById("jsonInput").value;
+
+            try {
+                JSON.parse(jsonInput);
+            } catch {
+                showPopup("Invalid JSON format.");
+                return;
+            }
+
+            document.getElementById("loading").classList.remove("hidden");
+
+            fetch("/update-appstate", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ passcode, jsonData: JSON.parse(jsonInput) })
+            }).then(res => res.text()).then(message => {
+                document.getElementById("loading").classList.add("hidden");
+                showPopup(message);
+            }).catch(() => {
+                document.getElementById("loading").classList.add("hidden");
+                showPopup("Error updating AppState.");
+            });
+        }
+
+        function restartBot(passcode) {
+            document.getElementById("loading").classList.remove("hidden");
+
+            fetch(`/restart?passcode=${encodeURIComponent(passcode)}`)
+            .then(res => res.text())
+            .then(message => {
+                document.getElementById("loading").classList.add("hidden");
+                showPopup(message);
+            })
+            .catch(() => {
+                document.getElementById("loading").classList.add("hidden");
+                showPopup("Error restarting bot.");
+            });
+        }
+
+        function executeCommand(passcode) {
+            const commandInput = document.getElementById("commandInput").value;
+            if (!commandInput) {
+                showPopup("Please enter a command.");
+                return;
+            }
+
+            document.getElementById("loading").classList.remove("hidden");
+
+            fetch("/execute-command", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ passcode, command: commandInput })
+            }).then(res => res.text()).then(output => {
+                document.getElementById("loading").classList.add("hidden");
+                showPopup(output);
+            }).catch(() => {
+                document.getElementById("loading").classList.add("hidden");
+                showPopup("Error executing command.");
+            });
+        }
+
+        function updatePing() {
+            fetch("/ping")
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById("pingValue").textContent = data.ping + " ms";
+                })
+                .catch(() => {
+                    document.getElementById("pingValue").textContent = "Error";
+                });
+        }
+
+        setInterval(updatePing, 5000);
+        updatePing();
+    </script>
+</body>
+</html>

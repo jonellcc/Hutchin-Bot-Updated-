@@ -1,0 +1,35 @@
+{
+  "prefix": "?",
+  "adminUIDs": [
+    "100036956043695",
+    "",
+    ""
+  ],
+  "moderatorUIDs": [
+    "",
+    "",
+    ""
+  ],
+  "botName": "Harold GD",
+  "ownerName": "Jonell Magallanes",
+  "facebookLink": "",
+  "resend": true,
+  "notilogs": true,
+  "appstate": "./appstate.json",
+  "restart": false,
+  "database": true,
+  "restartTime": 50,
+  "logs": false,
+  "FCA": "ws3-fca",
+  "loginpanel": {
+    "user": "your username in dashboard",
+    "password": "password your dashboard",
+    "passcode": "12345",
+    "FCA_OPTIONS": {
+      "pauseLog": true,
+      "selfListen": false,
+      "listenEvents": false,
+      "forceLogin": true
+    }
+  }
+}

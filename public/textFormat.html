@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hutchin Bot 2.0 - textStyle Feature Documentation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans text-gray-800">
+    <div class="max-w-4xl mx-auto p-8">
+        <div class="bg-white p-8 rounded-lg shadow-lg">
+            <h1 class="text-4xl font-extrabold text-center text-indigo-600 mb-6">Hutchin Bot 2.0 - textStyle Feature</h1>
+
+            <section class="mb-8">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-2">Overview</h2>
+                <p class="text-lg text-gray-600">
+                    The <strong>textStyle</strong> feature in Hutchin Bot 2.0 is designed to enhance the formatting of messages by automatically applying bold text styling to the Title and Footer. 
+                    Additionally, any text wrapped with <code>**bold text**</code> within the Description field will be automatically rendered as bold.
+                </p>
+            </section>
+
+            <section class="mb-8">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-2">How It Works</h2>
+                <ul class="list-inside list-disc text-lg text-gray-600">
+                    <li><strong>Title</strong>: Always rendered in bold text.</li>
+                    <li><strong>Footer</strong>: Always rendered in bold text.</li>
+                    <li><strong>Description</strong>: If any part of the Description is wrapped in <code>**bold text**</code>, that section will be rendered in bold.</li>
+                </ul>
+            </section>
+
+            <section class="mb-8">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-2">Example Input</h2>
+                <pre class="bg-gray-200 p-4 rounded-lg text-gray-800 text-lg">
+{
+    Title: "**AI Response**",
+    Description: "Hi again! **How's your day** going so far?",
+    Footer: "Powered by Zetsu | 🕰️ 4/27/2025, 8:14:28 AM"
+}
+                </pre>
+            </section>
+
+            <section class="mb-8">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-2">Example Output</h2>
+                <p class="bg-gray-100 p-4 rounded-lg text-gray-800 text-lg">
+                    𝗔𝗜 𝗥𝗲𝘀𝗽𝗼𝗻𝘀𝗲 <br>
+                    ━━━━━━━━━━━━━━━━━━ <br>
+                    Hi again! 𝗛𝗼𝘄'𝘀 𝘆𝗼𝘂𝗿 𝗱𝗮𝘆 going so far? <br>
+                    ━━━━━━━━━━━━━━━━━━ <br>
+                    Requested | 🕰️ 4/27/2025, 8:14:28 AM
+                </p>
+            </section>
+
+            <section class="mb-8">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-2">UI Demonstration</h2>
+                <p class="text-lg text-gray-600 mb-4">
+                    Below is a simple UI example that demonstrates how the textStyle function looks in action within a user interface. 
+                    You can modify the input fields and see how the Title, Description, and Footer are formatted accordingly.
+                </p>
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <div class="mb-4">
+                        <h3 class="text-xl font-bold text-gray-800">Title (Bold by Default)</h3>
+                        <p class="text-lg text-gray-600 font-bold">AI Response</p>
+                    </div>
+                    <div class="mb-4">
+                        <h3 class="text-xl font-bold text-gray-800">Description (Supports Bold Text)</h3>
+                        <p class="text-lg text-gray-600">Hi again! <span class="font-bold">How's your day</span> going so far?</p>
+                    </div>
+                    <div class="mb-4">
+                        <h3 class="text-xl font-bold text-gray-800">Footer (Bold by Default)</h3>
+                        <p class="text-lg text-gray-600">Requested | 🕰️ 4/27/2025, 8:14:28 AM</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="mb-8">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-2">Implementation Steps</h2>
+                <p class="text-lg text-gray-600">
+                    To integrate the textStyle functionality in your bot:
+                </p>
+                <ol class="list-decimal list-inside text-lg text-gray-600">
+                    <li>Define a message object with <strong>Title</strong>, <strong>Description</strong>, and <strong>Footer</strong> fields.</li>
+                    <li>Use the <code>textFormat.js</code> function to format the message text based on the input.</li>
+                    <li>Ensure that the Title and Footer are always rendered in bold, and any bolded sections in the Description are automatically formatted.</li>
+                    <li>Integrate the formatted message into your bot's response system.</li>
+                </ol>
+            </section>
+
+            <section>
+                <h2 class="text-2xl font-semibold text-gray-800 mb-2">Conclusion</h2>
+                <p class="text-lg text-gray-600">
+                    The textStyle feature in Hutchin Bot 2.0 is designed to give your messages a polished look by automatically applying bold formatting to specific sections like the Title and Footer, while allowing flexibility in the Description. 
+                    It's easy to implement and enhances the clarity and aesthetics of bot responses.
+                </p>
+            </section>
+
+            <div class="text-center mt-6">
+                <a href="/" class="inline-block bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700 transition duration-200">Back to Home</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

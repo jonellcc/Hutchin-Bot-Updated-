@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hutchins Bot 2.0 Documentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4a6bff;
+            --secondary: #6c5ce7;
+            --dark: #2d3436;
+            --light: #f5f6fa;
+            --success: #00b894;
+            --danger: #d63031;
+            --warning: #fdcb6e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            transform: translateY(-5px);
+            animation: slideDown 0.5s ease forwards;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .watermark {
+            position: fixed;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 0.8rem;
+            color: rgba(0, 0, 0, 0.3);
+            z-index: 100;
+            animation: fadeIn 2s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .section {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transform: scale(0.98);
+            transition: all 0.3s ease;
+        }
+
+        .section:hover {
+            transform: scale(1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            color: var(--secondary);
+            margin: 1rem 0 0.5rem;
+        }
+
+        pre {
+            background: #f8f9fa;
+            border-radius: 5px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+            border-left: 4px solid var(--primary);
+            font-family: 'Courier New', Courier, monospace;
+            position: relative;
+        }
+
+        code {
+            font-family: 'Courier New', Courier, monospace;
+            background: #f0f0f0;
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-size: 0.9rem;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(0, 0, 0, 0.1);
+            border: none;
+            border-radius: 3px;
+            padding: 0.2rem 0.5rem;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover {
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .example {
+            background: #f0f8ff;
+            border-left: 4px solid var(--secondary);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 5px 5px 0;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border-top: 4px solid var(--primary);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h3 {
+            margin-top: 0;
+            color: var(--dark);
+        }
+
+        .card p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        .modal.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 700px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 2rem;
+            position: relative;
+            transform: translateY(-20px);
+            transition: all 0.3s ease;
+        }
+
+        .modal.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+            background: none;
+            border: none;
+        }
+
+        .close-btn:hover {
+            color: var(--danger);
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .btn:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: var(--dark);
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.8rem;
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+
+        .badge-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .badge-secondary {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .badge-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .badge-warning {
+            background: var(--warning);
+            color: var(--dark);
+        }
+
+        .badge-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .mt-6 {
+            margin-top: 1.5rem;
+        }
+
+        .inline-block {
+            display: inline-block;
+        }
+
+        .bg-indigo-600 {
+            background-color: #4f46e5;
+        }
+
+        .text-white {
+            color: white;
+        }
+
+        .py-2 {
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+
+        .px-4 {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+
+        .rounded-lg {
+            border-radius: 0.5rem;
+        }
+
+        .hover\:bg-indigo-700:hover {
+            background-color: #4338ca;
+        }
+
+        .transition {
+            transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            transition-duration: 150ms;
+        }
+
+        .duration-200 {
+            transition-duration: 200ms;
+        }
+
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Hutchins Bot 2.0</h1>
+            <p class="subtitle">Command and Events Documentation</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <section class="section">
+            <h2>Introduction</h2>
+            <p>Welcome to the official documentation for Hutchins Bot 2.0. This guide provides comprehensive information about command structures, event handling, and available actions for bot development and this bot made in 2023 also this lightweight codes and create by Jonell Hutchin Magallanes</p>
+        </section>
+
+        <section class="section">
+            <h2>Command Structure</h2>
+            <p>All commands follow a standardized structure:</p>
+            <pre id="command-structure">
+module.exports = {
+    name: "Name of command",
+    info: "description of command",
+    dev: "Author",
+    onPrefix: true, // or false
+    dmUser: false, // true or false
+    nickName: ["alias1", "alias2"], // array of aliases
+    usages: "Usage instructions",
+    cooldowns: 10, // cooldown time in seconds
+    onLaunch: async function ({ api, event, actions }) {
+        // Command logic here
+    }
+};<button class="copy-btn" onclick="copyCode('command-structure')">Copy</button></pre>
+        </section>
+
+        <section class="section">
+            <h2>Event Handlers</h2>
+            <p>Hutchins Bot 2.0 provides several event handlers for different interaction types:</p>
+            
+            <div class="grid">
+                <div class="card" onclick="openModal('onLaunchModal')">
+                    <h3>onLaunch</h3>
+                    <p>Executed when the command is called. Handles initialization tasks and responds to the event.</p>
+                    <span class="badge badge-primary">Core Function</span>
+                </div>
+                
+                <div class="card" onclick="openModal('onEventsModal')">
+                    <h3>onEvents with target</h3>
+                    <p>Triggered with arguments including the target for more complex command handling.</p>
+                    <span class="badge badge-secondary">Advanced</span>
+                </div>
+                
+                <div class="card" onclick="openModal('onReplyModal')">
+                    <h3>onReply</h3>
+                    <p>Executed when a user replies to a specific message for context-sensitive responses.</p>
+                    <span class="badge badge-success">Interactive</span>
+                </div>
+                
+                <div class="card" onclick="openModal('callReactModal')">
+                    <h3>callReact</h3>
+                    <p>Invoked when a user reacts to a message, enabling confirmation actions.</p>
+                    <span class="badge badge-warning">Reaction-based</span>
+                </div>
+                
+                <div class="card" onclick="openModal('noPrefixModal')">
+                    <h3>noPrefix</h3>
+                    <p>Allows command execution without a prefix for natural interactions.</p>
+                    <span class="badge badge-danger">Special</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Actions</h2>
+            <p>The <code>actions</code> object provides methods for responding to user interactions:</p>
+            
+            <div class="example">
+                <h3>Reply Message</h3>
+                <pre>actions.reply("Hello!");</pre>
+                <p>Respond to a user directly.</p>
+            </div>
+            
+            <div class="example">
+                <h3>Send Message</h3>
+                <pre>actions.send("Hello, everyone!");</pre>
+                <p>Send a message to the thread.</p>
+            </div>
+            
+            <div class="example">
+                <h3>React to Message</h3>
+                <pre>actions.react("🔥");</pre>
+                <p>React to the current message with an emoji.</p>
+            </div>
+            
+            <div class="example">
+                <h3>Edit Message</h3>
+                <pre>const loading = await actions.reply("Loading...");
+actions.edit("Hello", loading.messageID);</pre>
+                <p>Edit a previously sent message.</p>
+            </div>
+            
+            <div class="example">
+                <h3>Kick User</h3>
+                <pre>actions.kick(userID);</pre>
+                <p>Remove a user from the group.</p>
+            </div>
+            
+            <div class="example">
+                <h3>Leave Group</h3>
+                <pre>actions.leave();</pre>
+                <p>Remove the bot from the current group.</p>
+            </div>
+            
+            <div class="example">
+                <h3>Share Contact</h3>
+                <pre>actions.share(contact, senderID);</pre>
+                <p>Share a contact with a specific user.</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Advanced Features</h2>
+            <h3>Nickname (Aliases)</h3>
+            <p>You can use aliases for commands by defining a <code>nickName</code> property:</p>
+            <pre id="nickname-example">
+module.exports = {
+    name: "test",
+    nickName: ["test", "testing"],
+    onLaunch: async function ({ api, event, actions }) {
+        await actions.reply("This is a test command.");
+    }
+};<button class="copy-btn" onclick="copyCode('nickname-example')">Copy</button></pre>
+            
+            <h3>dmUser Property</h3>
+            <p>The <code>dmUser</code> property indicates whether a command can be executed through direct messages:</p>
+            <pre id="dmuser-example">
+module.exports = {
+    name: "example",
+    dmUser: true,
+    onLaunch: async function ({ api, event, actions }) {
+        await actions.reply("This command can be executed in DMs.");
+    }
+};<button class="copy-btn" onclick="copyCode('dmuser-example')">Copy</button></pre>
+        </section>
+  
+        <section class="section">
+            <h2>Fonts Style Option</h2>
+            <h3>global.fonts</h3>
+            <p>Can be used in using command to styling fonts like bold fonts and also there mo options fonts like (bold, monospace, boldItalic, italic)<code>gloal.fonts</code> property:</p>
+            <pre id="fonts-example">const bold = global.fonts.bold("Hello"); 
+actions.reply(bold);
+//output is 𝗛𝗲𝗹𝗹𝗼<button class="copy-btn" onclick="copyCode('fonts-example')">Copy</button></pre>
+            
+            <h3>TextFormating Style</h3>
+            <p>The <code>TextFormat</code> Can be textFormat just like discord like Title, Description, and Footers:</p>
+            <pre id="textformat-example">
+onLaunch: async function ({ actions }) {
+    const formattedMessage = textFormat({
+        Title: "**Test Command**",
+        Description: "This is a test description with some **bold text**.",
+        Footer: `🕰️ ${new Date().toLocaleString()}`
+    });
+
+    await actions.reply(formattedMessage);
+}<button class="copy-btn" onclick="copyCode('textformat-example')">Copy</button></pre>
+        </section>
+  
+        <section class="section">
+            <h2>Currencies and Banning Functions</h2>
+            <h3>global.currencies</h3>
+            <p>Can be used to control the database of currencies of users and also this a test feature and methods => setCurrency(type, amount, userID)
+Set a specific currency type (e.g., dollars, xp) to an exact amount.
+Returns: success message.
+
+addCurrency(type, amount, userID)
+Add a numeric value to an existing currency type.
+Returns: success message.
+
+deleteCurrency(type, userID)
+Delete a specific currency type from the user.
+Returns: success or error message.<code>global.currencies</code> property:</p>
+            <pre id="currencies-example">
+// to set the currencies of users
+global.currencies.setCurrency("dollars", 500, "100070453096953");
+// Output: "Successfully set dollars to 500 for user ID 100070453096953"
+
+// to add xp to users
+global.currencies.addCurrency("xp", 10, "100070453096953");
+// Output: "Successfully added 10 xp to user ID 100070453096953"
+
+//to delete the xps to users 
+global.currencies.deleteCurrency("xpBuffer", "100070453096953");
+// Output: "Successfully deleted xpBuffer from user ID 100070453096953"
+<button class="copy-btn" onclick="copyCode('currencies-example')">Copy</button></pre>
+            
+            <h3>Banning Using Global</h3>
+            <p>This can be using ban users or threads but this soon will be added<code>global.ban</code> Soon</p>
+            <pre id="ban-example">
+Coming soon...<button class="copy-btn" onclick="copyCode('ban-example')">Copy</button></pre>
+        </section>
+        
+        <div class="text-center mt-6">
+            <a href="/" class="inline-block bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700 transition duration-200">Back to Home</a>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div class="modal" id="onLaunchModal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('onLaunchModal')">&times;</button>
+            <h2>onLaunch Function</h2>
+            <p>The <code>onLaunch</code> function is executed when the command is called. It can handle initialization tasks and respond to the event.</p>
+            <pre id="onLaunch-example">
+onLaunch: async function ({ api, event, actions }) {
+    const message = "Command executed!";
+    await actions.reply(message);
+}<button class="copy-btn" onclick="copyCode('onLaunch-example')">Copy</button></pre>
+            <h3>Parameters</h3>
+            <ul>
+                <li><code>api</code>: The bot API interface</li>
+                <li><code>event</code>: The triggering event object</li>
+                <li><code>actions</code>: Object containing response methods</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="modal" id="onEventsModal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('onEventsModal')">&times;</button>
+            <h2>onEvents with target</h2>
+            <p>The <code>onEvents</code> function is triggered with arguments, including the target for more complex command handling.</p>
+            <pre id="onEvents-example">
+onEvents: async function ({ api, event, target }) {
+    const targetText = target.join(" ");
+    if (!targetText) return actions.reply("Provide the Text");
+    // Function logic here 
+}<button class="copy-btn" onclick="copyCode('onEvents-example')">Copy</button></pre>
+            <h3>Parameters</h3>
+            <ul>
+                <li><code>api</code>: The bot API interface</li>
+                <li><code>event</code>: The triggering event object</li>
+                <li><code>target</code>: Array of target arguments</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="modal" id="onReplyModal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('onReplyModal')">&times;</button>
+            <h2>onReply Function</h2>
+            <p>The <code>onReply</code> function is executed when a user replies to a specific message. This allows for context-sensitive responses.</p>
+            <pre id="onReply-example">
+onReply: async function({ reply, api, event }) {
+    const response = `Your reply is: ${reply}`;
+    await api.sendMessage(response, event.threadID);
+}<button class="copy-btn" onclick="copyCode('onReply-example')">Copy</button></pre>
+            <h3>Parameters</h3>
+            <ul>
+                <li><code>reply</code>: The reply content from user</li>
+                <li><code>api</code>: The bot API interface</li>
+                <li><code>event</code>: The triggering event object</li>
+                <li><code>global.client.onReply</code>: is used to track and manage replies to specific messages. It stores the reply context (like messageID and author), allowing the bot to match replies with the correct message and respond accordingly. It also handles auto-cleanup of expired or processed replies.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="modal" id="callReactModal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('callReactModal')">&times;</button>
+            <h2>callReact Function</h2>
+            <p>The <code>callReact</code> function is invoked when a user reacts to a message. It enables confirmation actions or handling reactions.</p>
+            <pre id="callReact-example">
+callReact: async function ({ reaction, event, api }) {
+    if (reaction === '👍') {
+        await actions.reply("Confirmed!");
+    } else if (reaction === '👎') {
+        await actions.reply("Cancelled.");
+    }
+}<button class="copy-btn" onclick="copyCode('callReact-example')">Copy</button></pre>
+            <h3>Parameters</h3>
+            <ul>
+                <li><code>reaction</code>: The reaction emoji used</li>
+                <li><code>api</code>: The bot API interface</li>
+                <li><code>event</code>: The triggering event object</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="modal" id="noPrefixModal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('noPrefixModal')">&times;</button>
+            <h2>noPrefix Function</h2>
+            <p>The <code>noPrefix</code> function allows the command to be executed without a prefix, useful for more natural interactions.</p>
+            <pre id="noPrefix-example">
+noPrefix: async function ({ api, event }) {
+    await actions.reply("This command can be executed without a prefix.");
+}<button class="copy-btn" onclick="copyCode('noPrefix-example')">Copy</button></pre>
+            <h3>Parameters</h3>
+            <ul>
+                <li><code>api</code>: The bot API interface</li>
+                <li><code>event</code>: The triggering event object</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="watermark">
+        Bot Created by Developer: Jonell Hutchin Magallanes
+    </div>
+
+    <script>
+        // Modal functions
+        function openModal(id) {
+            document.getElementById(id).classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside content
+        window.addEventListener('click', function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Copy code function
+        function copyCode(id) {
+            const codeElement = document.getElementById(id);
+            const code = codeElement.textContent.replace('Copy', '').trim();
+            
+            navigator.clipboard.writeText(code).then(() => {
+                const button = codeElement.querySelector('.copy-btn');
+                button.textContent = 'Copied!';
+                setTimeout(() => {
+                    button.textContent = 'Copy';
+                }, 2000);
+            });
+        }
+
+        // Add animation to sections when scrolling
+        const sections = document.querySelectorAll('.section');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = 'scale(1)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        sections.forEach(section => {
+            section.style.opacity = 0;
+            section.style.transform = 'scale(0.95)';
+            section.style.transition = 'all 0.5s ease';
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
