@@ -9303,5 +9303,33 @@
   "mid.$cAABi-uGTdcGeY2_sDGYMiqgn5YKi": {
     "body": "?stats",
     "attachments": []
+  },
+  "mid.$cAABi-uGTdcGeY440qWYMkjo7fVIn": {
+    "body": "?shell echo hi",
+    "attachments": []
+  },
+  "mid.$cAABi-uGTdcGeY45UXGYMkkJ5xhUy": {
+    "body": "?module shell",
+    "attachments": []
+  },
+  "mid.$cAABi-uGTdcGeY457i2YMkkxGbYLR": {
+    "body": "?module share shell",
+    "attachments": []
+  },
+  "mid.$cAABi-uGTdcGeY49b3WYMkoRNyxmQ": {
+    "body": "?module install shell const { exec } = require(\"child_process\");\n\nmodule.exports = {\n  name: \"shell\",\n  usedby: 2,\n  info: \"Execute shell commands\",\n  onPrefix: true,\n  nickName: [\"exec\", \"linux\"],\n  dev: \"Jonell Magallanes\",\n  cooldowns: 3,\n  dmUser: false,\n  usages: \"shell <command>\",\n\n  onLaunch: async function ({ api, event, target }) {\n    const { threadID, messageID } = event;\n    const command = target.join(\" \");\n\n    if (!command) {\n      return api.sendMessage(\"Please provide a shell command to execute.\", threadID, messageID);\n    }\n\n    const msg = await api.sendMessage(\"Processing...\", threadID, messageID);\n\n    exec(command, (error, stdout, stderr) => {\n      if (error) {\n        return api.editMessage(`❌ Error:\\n${error.message}`, msg.messageID);\n      }\n      if (stderr) {\n        return api.editMessage(`⚠️ Stderr:\\n${stderr}`, msg.messageID);\n      }\n      api.editMessage(stdout || \"✅ Done with no output.\", msg.messageID);\n    });\n  }\n};",
+    "attachments": []
+  },
+  "mid.$cAABi-uGTdcGeY4-IKmYMko9jLifD": {
+    "body": "?shell echo hi",
+    "attachments": []
+  },
+  "mid.$cAABi-uGTdcGeY4-qvWYMkpgH-Z-4": {
+    "body": "?module reload shell",
+    "attachments": []
+  },
+  "mid.$cAABi-uGTdcGeY4_FU2YMkp6oQMVM": {
+    "body": "?shell npm i",
+    "attachments": []
   }
 }
