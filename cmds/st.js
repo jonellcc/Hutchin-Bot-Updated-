@@ -73,7 +73,7 @@ module.exports = {
           if (autoStoryEnabled) return api.sendMessage("❌ Auto-story is already active globally.", event.threadID);
           autoStoryEnabled = true;
           fs.writeFileSync(STORY_FILE, 'true');
-          return api.sendMessage("✅ Auto-story posting activated globally! (Every 1 minute)", event.threadID);
+          return api.sendMessage("✅ Auto-story posting activated globally! (Every 4 hours)", event.threadID);
         } else {
           autoStoryEnabled = false;
           fs.writeFileSync(STORY_FILE, 'false');
@@ -105,8 +105,8 @@ module.exports = {
   }
 };
 
-// Scheduled task
-cron.schedule('* * * * *', async () => {
+// Scheduled task to run every 4 hours (at minute 0 of every 4th hour)
+cron.schedule('0 */4 * * *', async () => {
   if (!autoStoryEnabled || !globalApi) return;
 
   try {
@@ -117,6 +117,7 @@ cron.schedule('* * * * *', async () => {
 
     const storyContent = `Note for Today\n\n${quote}`;
     await globalApi.story.create(storyContent, randomFont, randomBg);
+    console.log(`[Auto-Story] Posted at ${new Date().toLocaleString()}`);
   } catch (error) {
     console.error('Scheduled story error:', error);
   }
