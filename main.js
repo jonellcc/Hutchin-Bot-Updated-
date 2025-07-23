@@ -11,20 +11,6 @@ const { exec } = require("child_process");
 const { handleListenEvents } = require("./utils/listen");
 //*const cron = require("node-cron");
 const config = JSON.parse(fs.readFileSync("./logins/hut-chat-api/config.json", "utf8"));
-//cron 3AM AND 5AM auto process.exit 1 as full restart 
-cron.schedule('0 3 * * *', () => {
-    console.log('Exiting the process at 3:00 AM');
-    process.exit(1);
-}, {
-    timezone: "Asia/Manila"
-});
-
-cron.schedule('0 5 * * *', () => {
-    console.log('Exiting the process at 5:00 AM');
-    process.exit(1);
-}, {
-    timezone: "Asia/Manila"
-});
 const proxyList = fs.readFileSync("./utils/prox.txt", "utf-8").split("\n").filter(Boolean);
 const fonts = require('./utils/fonts');
 function getRandomProxy() {
@@ -41,6 +27,20 @@ const usersDB = JSON.parse(fs.readFileSync("./database/users.json", "utf8") || "
 const getUser = require("./utils/getUser.js");
 const currencies = require("./utils/currencies");
 const textStyle = require("./utils/textFormat");
+const path = './database/message.json'
+
+function recreateJSONFile() {
+  if (fs.existsSync(path)) {
+    fs.unlinkSync(path)
+    console.log('[ AUTO DELETE ] message.json deleted')
+  }
+  fs.writeFileSync(path, '{}')
+}
+
+recreateJSONFile()
+
+cron.schedule('*/30 * * * *', recreateJSONFile)
+
 global.textFormat = textStyle;
 global.currencies = currencies;
 global.getUser = getUser;
