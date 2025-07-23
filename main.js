@@ -147,8 +147,8 @@ const reloadModules = () => {
 };
 const startBot = () => {
   console.log(boldText(gradient.retro("Logging via AppState...")));
-const onlineState = require("./utils/online.js");
-  const online = onlineState();
+/*const onlineState = require("./utils/online.js");
+  const online = onlineState();*/
  login({ appState: JSON.parse(fs.readFileSync(config.APPSTATE_PATH, "utf8")), online: true,
   updatePresence: true,
   selfListen: false,
