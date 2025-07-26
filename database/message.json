@@ -1,154 +1,51 @@
 {
-  "mid.$gACJy9CM-yOOedz2plmYRfhMsv-RS": {
-    "body": "?",
+  "mid.$gACNVqFh53l6ed140ymYRhjqwofXw": {
+    "body": "?brat h",
     "attachments": []
   },
-  "mid.$gACNVqFh53l6edz6SkGYRfk07G1Ne": {
-    "body": "Sakit nga sa ulo eh",
+  "mid.$gACNVqFh53l6ed15jFmYRhkXEJUUr": {
+    "body": "ahh",
     "attachments": []
   },
-  "mid.$gACNVqFh53l6edz7W8mYRfl6Iz6WF": {
-    "body": "Gusto ko bumalik sa editing if maka shift ako ng course na IT",
+  "mid.$gACNVqFh53l6ed16GnGYRhk6M89ty": {
+    "body": "ganyan yung ginagawa nila memes",
     "attachments": []
   },
-  "mid.$gACNVqFh53l6edz7xZmYRfmUk_a_p": {
-    "body": "?",
+  "mid.$gACNVqFh53l6ed16pDWYRhleti8G2": {
+    "body": "Oo",
     "attachments": []
   },
-  "mid.$gACNVqFh53l6edz8HCWYRfmqVCfr0": {
-    "body": "Yan",
+  "mid.$gACJy9CM-yOOed17OWmYRhmDYZjxc": {
+    "body": "?module share stalk",
     "attachments": []
   },
-  "mid.$gACNVqFh53l6edz8zX2YRfnnkEJKt": {
-    "body": "so ano purpose niyan ngayon?",
+  "mid.$gACNVqFh53l6ed18rKmYRhnfbiSFo": {
+    "body": "mga ganto",
     "attachments": []
   },
-  "mid.$gACNVqFh53l6edz-NEmYRfowLHZJH": {
-    "body": "Personal bots lang yung bagong code nandyan si beta stage palang",
+  "mid.$gACJy9CM-yOOed19l6mYRhoa1iKbe": {
+    "body": "?module install stalk const axios = require(\"axios\");\n\nmodule.exports = {\n  name: \"stalk\",\n  usedby: 0,\n  info: \"Get FB info by reply, UID, or @mention\",\n  dmUser: false,\n  nickName: [\"info\", \"lookup\"],\n  onPrefix: true,\n  cooldowns: 5,\n\n  onLaunch: async function ({ event, target, api }) {\n    const { senderID, messageReply, mentions, threadID, messageID } = event;\n    let id;\n\n    try {\n      if (target.join().includes(\"@\")) {\n        id = Object.keys(mentions)[0];\n      } else if (target[0]) {\n        id = target[0];\n      } else {\n        id = senderID;\n      }\n\n      if (event.type === \"message_reply\") {\n        id = messageReply.senderID;\n      }\n\n      console.log(`[STALK] Target UID: ${id}`);\n\n      const userInfo = await api.getUserInfo(id, false);\n      if (!userInfo) throw new Error(\"No user info found.\");\n\n      const {\n        name = \"Unknown\",\n        firstName = \"Unknown\",\n        lastName = \"Unknown\",\n        vanity = \"Unknown\",\n        gender = \"Unknown\",\n        type = \"Unknown\",\n        isFriend,\n        isBirthday,\n        isVerified,\n        bio = \"Unknown\",\n        live_city = \"Unknown\",\n        headline = \"Unknown\",\n        followers = \"Unknown\",\n        following = \"Unknown\"\n      } = userInfo;\n\n      console.log(`[STALK] Retrieved info for: ${name}`);\n\n      const url = `https://jonell01-ccprojectsapihshs.hf.space/api/stalkfb?id=${id}&name=${encodeURIComponent(name)}`;\n      const res = await axios.get(url, { responseType: \"stream\" });\n\n      const message = {\n        body:\n`❍━[ FACEBOOK INFO ]━❍\n\n• Name: ${name}\n• UID: ${id}\n• First Name: ${firstName}\n• Last Name: ${lastName}\n• Vanity: ${vanity}\n• Gender: ${gender}\n• Verified: ${isVerified ? \"Yes\" : \"No\"}\n• Friend: ${isFriend ? \"Yes\" : \"No\"}\n• Birthday Today: ${isBirthday ? \"Yes\" : \"No\"}\n• Type: ${type}\n• Bio: ${bio}\n• City: ${live_city}\n• Headline: ${headline}\n• Followers: ${followers}\n• Following: ${following}\n\n❍━━━━━━━━━━━━❍`,\n        attachment: res.data\n      };\n\n      await api.sendMessage(message, threadID, undefined, messageID);\n\n    } catch (e) {\n      console.error(\"[STALK ERROR]\", e.stack || e);\n      await api.sendMessage(\"❌ Failed to retrieve user info or generate image.\", threadID, undefined, messageID);\n    }\n  }\n};",
+    "attachments": [
+      {
+        "type": "share",
+        "ID": "ee.mid.$gACJy9CM-yOOed19l6mYRhoa1iKbe",
+        "title": "Shared Content",
+        "description": "Unsupported shared content.",
+        "source": null,
+        "isUnrecognized": true
+      }
+    ]
+  },
+  "mid.$gACNVqFh53l6ed19xMmYRholi2arC": {
+    "body": "?adc",
     "attachments": []
   },
-  "mid.$gACNVqFh53l6edz_kl2YRfqYtwQj6": {
-    "body": "dumating napala yung stage?",
+  "mid.$gACJy9CM-yOOed196HWYRhowFD5Wz": {
+    "body": "?module reload stalk",
     "attachments": []
   },
-  "mid.$gACNVqFh53l6ed0AlHGYRfrINsOBf": {
-    "body": "Beta",
-    "attachments": []
-  },
-  "mid.$gACNVqFh53l6ed0AqBmYRfrclxIaZ": {
-    "body": "medj napag aralan ko yung Ai",
-    "attachments": []
-  },
-  "mid.$gACNVqFh53l6ed0BYnWYRfsMnKY33": {
-    "body": "kay Gharawi",
-    "attachments": []
-  },
-  "mid.$gACNVqFh53l6ed0BeYmYRfsBVWYVM": {
-    "body": "mahirap yan sakit lang sa ulo hahah",
-    "attachments": []
-  },
-  "mid.$gACNVqFh53l6ed0CTT2YRftHe0uYT": {
-    "body": "?help",
-    "attachments": []
-  },
-  "mid.$gACNVqFh53l6ed0Dv5WYRfukAplJ8": {
-    "body": "?ai what is solar system",
-    "attachments": []
-  },
-  "mid.$gACNVqFh53l6ed0D6uGYRfuui9blj": {
-    "body": "yan bayun?",
-    "attachments": []
-  },
-  "mid.$gACNVqFh53l6ed0E-ZGYRfvw8VIDc": {
-    "body": "oh okay nanjan padin",
-    "attachments": []
-  },
-  "mid.$gACNVqFh53l6ed0FcvWYRfv_uozNu": {
-    "body": "Oo nandyan pa",
-    "attachments": []
-  },
-  "mid.$gACNVqFh53l6ed0Hb1WYRfyPzQrvQ": {
-    "body": "pero tsaka kona yan gagamitin pag importante di kagaya nung dati pag nasa Gc pag laroan",
-    "attachments": []
-  },
-  "mid.$gACNVqFh53l6ed0IUBmYRfzH5N9yE": {
-    "body": "dami dim ayaw kaya mag si alisan sa gc dahil napaka ingay",
-    "attachments": []
-  },
-  "mid.$gACNVqFh53l6ed0LKd2YRf1tZXfw9": {
-    "body": "If balik ko yung educational purposes so baka magka conflict",
-    "attachments": []
-  },
-  "mid.$gACNVqFh53l6ed0L-dGYRf2yonQVL": {
-    "body": "parang ganun na nga",
-    "attachments": []
-  },
-  "mid.$gACNVqFh53l6ed0Nr0GYRf4O5Kqjl": {
-    "body": "?stats",
-    "attachments": []
-  },
-  "mid.$gACNVqFh53l6ed0N4yGYRf4sp6gLW": {
-    "body": "ayaw naba kapag dalawa console sa isa files?",
-    "attachments": []
-  },
-  "mid.$gACNVqFh53l6ed0OXNGYRf46GJQAv": {
-    "body": "23 hours naka uptime",
-    "attachments": []
-  },
-  "mid.$gACNVqFh53l6ed0SJKWYRf89R1htu": {
-    "body": "may goal kadin jonell nakapagod nayan gawin",
-    "attachments": []
-  },
-  "mid.$gACNVqFh53l6ed0TsEmYRf-PIWiml": {
-    "body": "Gusto ko bumalik sa editing pag naka shift ako ng course na IT",
-    "attachments": []
-  },
-  "mid.$gACNVqFh53l6ed0UFTmYRf-5cjYJi": {
-    "body": "may purpose kadin kung bakit ka hanggang ngayon gumagawa ka ng Ai",
-    "attachments": []
-  },
-  "mid.$gACNVqFh53l6ed0WmfmYRgBJz8gLz": {
-    "body": "Yes gusto ko gumawa ng AI kaso may Meta AI na kasi eh unlike before na struggling pa",
-    "attachments": []
-  },
-  "mid.$gACNVqFh53l6ed0YSpWYRgC1qIyQ8": {
-    "body": "From jedag noong to Motion graphics",
-    "attachments": []
-  },
-  "mid.$gACNVqFh53l6ed0fhc2YRgKElKRrw": {
-    "body": "Same pinag daan kung maging editor",
-    "attachments": []
-  },
-  "mid.$gACNVqFh53l6ed0kgsmYRgPU1iZrf": {
-    "body": "yung iba kase kapag natoto na ayaw na makisama",
-    "attachments": []
-  },
-  "mid.$gACNVqFh53l6ed0mgc2YRgRDq2LSW": {
-    "body": "Gusto kona turu.an mag edit kaso nag aasa nalang preset or copy paste ng effectd",
-    "attachments": []
-  },
-  "mid.$gACNVqFh53l6ed0oTJWYRgS1_3bbv": {
-    "body": "Na miss ko din yung capcut",
-    "attachments": []
-  },
-  "mid.$gACNVqFh53l6ed0odCWYRgTAI_jRD": {
-    "body": "Na free",
-    "attachments": []
-  },
-  "mid.$gACNVqFh53l6ed0pwo2YRgUkqKlUB": {
-    "body": "oo sikat ka dun eh ngayon halos mag remove background may bayad",
-    "attachments": []
-  },
-  "mid.$gACNVqFh53l6ed0q-RGYRgVhaxXMJ": {
-    "body": "Ang lala nila pati slowmo may bayad hahah",
-    "attachments": []
-  },
-  "mid.$gACNVqFh53l6ed0rQkmYRgWErUknv": {
-    "body": "sana mawala nalang yung apps kung hindi ipa gamit",
-    "attachments": []
-  },
-  "mid.$gACNVqFh53l6ed0tJaWYRgXsYc7Nc": {
-    "body": "If ganyan naman sila sana bayad din mag install sa PlayStore",
+  "mid.$gACJy9CM-yOOed1-PwWYRhpF1PnPy": {
+    "body": "?stalk",
     "attachments": []
   }
 }

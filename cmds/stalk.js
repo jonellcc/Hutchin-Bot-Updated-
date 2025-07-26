@@ -1,6 +1,4 @@
 const axios = require("axios");
-const fs = require("fs-extra");
-const path = require("path");
 
 module.exports = {
   name: "stalk",
@@ -31,11 +29,7 @@ module.exports = {
       console.log(`[STALK] Target UID: ${id}`);
 
       const userInfo = await api.getUserInfo(id, false);
-
-      if (!userInfo) {
-        console.log(`[STALK ERROR] No user info returned for UID: ${id}`);
-        throw new Error("No user info found.");
-      }
+      if (!userInfo) throw new Error("No user info found.");
 
       const {
         name = "Unknown",
@@ -57,13 +51,7 @@ module.exports = {
       console.log(`[STALK] Retrieved info for: ${name}`);
 
       const url = `https://jonell01-ccprojectsapihshs.hf.space/api/stalkfb?id=${id}&name=${encodeURIComponent(name)}`;
-      const res = await axios.get(url, { responseType: "arraybuffer" });
-
-      const outputPath = path.join(__dirname, "cache", `${id}_stalk.png`);
-      await fs.ensureDir(path.dirname(outputPath));
-      await fs.writeFile(outputPath, Buffer.from(res.data));
-
-      console.log(`[STALK] Image saved at: ${outputPath}`);
+      const res = await axios.get(url, { responseType: "stream" });
 
       const message = {
         body:
@@ -86,28 +74,14 @@ module.exports = {
 • Following: ${following}
 
 ❍━━━━━━━━━━━━❍`,
-        attachment: fs.createReadStream(outputPath)
+        attachment: res.data
       };
 
       await api.sendMessage(message, threadID, undefined, messageID);
-    } catch (e) {
-      console.error("[STALK ERROR] An error occurred:");
-      console.error(e.stack || e);
 
-      try {
-        const fallbackPath = path.join(__dirname, "cache", `${id}_stalk.png`);
-        if (await fs.pathExists(fallbackPath)) {
-          await api.sendMessage({
-            body: "❌ Failed to load some user data, but here is the profile image:",
-            attachment: fs.createReadStream(fallbackPath)
-          }, threadID, undefined, messageID);
-        } else {
-          await api.sendMessage("❌ Failed to retrieve user info and no image was generated.", threadID, undefined, messageID);
-        }
-      } catch (sendErr) {
-        console.error("[STALK ERROR] Failed to send fallback message:");
-        console.error(sendErr.stack || sendErr);
-      }
+    } catch (e) {
+      console.error("[STALK ERROR]", e.stack || e);
+      await api.sendMessage("❌ Failed to retrieve user info or generate image.", threadID, undefined, messageID);
     }
   }
 };
